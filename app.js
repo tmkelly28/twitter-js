@@ -1,5 +1,13 @@
 var express = require('express');
 var app = express();
+var swig = require('swig');
+
+swig.setDefaults({ cache: false });
+
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+
 
 app.use(function(req, res, next){
 	console.log(req.method);
@@ -11,7 +19,10 @@ app.use(function(req, res, next){
 
 
 app.get('/', function(request, response) {
-	response.send("Hello, world!");
+	response.render('index', {
+			title: 'My Awesome Page',
+			people: [{name: 'Gandalf'}, {name: 'Frodo'}, {name: 'Hermoine'}]
+		});
 })
 
 app.get('/about', function(request, response ){
