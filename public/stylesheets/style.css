@@ -43,14 +43,22 @@ code {
 
 .tweetbox {
   padding: 7px;
+  list-style-type: none;
 }
 
 .tweetbox img {
   float: left;
   height: 48px;
   width: 48px;
+  padding-right: 3px;
   content:url("http://lorempixel.com/48/48");
 }
+
+.tweetbox .well {
+  width: 800px;
+  margin: 0;
+}
+
 .content {
   margin-left: 60px;
 }
