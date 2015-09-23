@@ -3,6 +3,7 @@ var app = express();
 var swig = require('swig');
 var routes = require('./routes/');
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
 
 // Configure file rendering
 swig.setDefaults({ cache: false });
@@ -14,9 +15,6 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json())
 
-// Delegate routing to routes directory
-app.use('/', routes);
-
 // set the server to listen
 var server = app.listen(8080, function () {
   var host = server.address().address;
@@ -24,3 +22,7 @@ var server = app.listen(8080, function () {
 
   console.log('Listening at http://%s:%s', host, port);
 });
+var io = socketio.listen(server);
+
+// Delegate routing to routes directory
+app.use('/', routes(io));

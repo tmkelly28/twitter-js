@@ -79,4 +79,33 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Load the socket.io library above, then connect to the server.
+    // Because the socket.io server is being run on the same server as your 
+    // Express instance, you can connect() without any arguments.
+    var socket = io.connect();
+
+    // When 'new_tweet' events are fired, do something with the packaged tweet
+    socket.on('new_tweet', function (tweet) {
+      console.log(tweet);
+      var name = tweet.name;
+      var text = tweet.text;
+      var id = tweet.id;
+      console.log("checking, ", name, text, id);
+      alert('Refreshing... check the console...');
+      // some logic to add the new tweet to the DOM…
+
+      document.getElementById('tweetzone').insertAdjacentHTML('beforeend', "<li class='tweetbox pull-left'><div><img/><strong><a href='/users/'" + name + "'>" + name + "</a></strong><br />" + text + "<br /><a href='#'>Re-tweet</a> <a href='/users/" + name + "/tweets/" + id + "'>Love it!</a></div></li>");
+
+      var l = document.getElementById('tweetzone').children.length;
+      var li = document.getElementById('tweetzone').children[l - 1];
+      li.children[0].className = "well";
+
+    }); 
+  </script>
+ 
 </html>
+
+
